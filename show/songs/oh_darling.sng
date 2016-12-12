@@ -1,0 +1,106 @@
+song {
+  name: "Oh! Darling"
+  part {
+    key { tonic: A mode: ionian } # AKA A Major
+    meter: {count:12 note:8}
+
+    name: "intro"
+    bar {
+      b {}
+      b {
+        n:p5 q:aug
+        l: ' oh...'}
+    }
+  }
+  part {
+    name: "verse"
+
+    repeat: 2
+    comment: "2 verses"
+    bar {
+      b {
+        n:p1 q:maj
+        l:"darling    please be-"
+      }
+    }
+    bar {
+      b { 
+        n:p5
+        l: "lieve me "
+      }
+    }
+    bar {
+      b {
+        n:min6 q:min
+        l: "I'll never do you no"
+      }
+    }
+    bar {
+      b {
+        n:p5
+        l: "harm. be-"
+      }
+    }
+    bar {
+      b {
+        n:2 q:min
+        l: "lieve me when I"
+      }
+      b {
+        n:p5 q:dom
+        l: "tell you"
+      }
+      
+    }
+
+    bar {
+      b {
+        n:min6 q:min
+        l: "I'll never"
+        l: "I'll never"
+      }
+      b {
+        n:p5 q:dom
+        l: "you no"
+        l: "make it a-"
+      }
+    }
+  }
+  part {
+    name: "first verse break"
+    repeat: 1
+    bar {
+      b {
+        n:p1
+        l: "harm"
+      }
+      b { n:p4 }
+
+    }
+    bar {
+      b {n:p1} b {n:p5}
+    }
+  }
+  part {
+    name: 'break to chorus'
+    repeat: 1
+    bar {
+      b {
+        n:p1
+        l: "lone"
+      }
+      b { n:p4 }
+    }
+    bar {
+      b { n:p1 c:3 } b { n:p1 q:dom c: 9 l: "... when you-" }
+    }
+ 
+  }
+  
+  part {
+    bar { b {n:p1 q:maj} }
+    bar { b {n:p4 q:maj} }
+    bar { b {n:p5 q:maj} }
+    bar { b {n:p1 q:maj} }
+  }
+}
