@@ -103,4 +103,7 @@ song {
     bar { b {n:p5 q:maj} }
     bar { b {n:p1 q:maj} }
   }
+
+ part {
+   bar { b { }}}
 }

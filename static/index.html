@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/jquery-3.1.1.min.js"></script>
+<title>(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ Karaoke time! ✧ﾟ･: *ヽ(◕ヮ◕ヽ) </title>
+<style>
+body {
+	font-family: Arial, "MS Trebuchet", sans-serif;
+	font-weight: normal;
+	text-align:center;
+	background:#55EE00;
+	color:#3333BB;
+}
+#loading {
+	font-size: 8em;
+}
+
+#song h2 {
+	font-size:3em;
+}
+
+.part {
+	clear:both;
+}
+.part h3 {
+	left:0;
+	top:0;
+}
+.bar {
+	display:inline-block;
+	width: 4in;
+	height:1in;
+	border-right: 8px solid #3333bb;
+}
+
+.beat { display: inline-block; }
+.chord{ display: inline-block; }
+
+.clear {
+	clear:both;
+	height:0;
+}
+
+</style>
+<script>
+
+var k = {};
+k.updateSong = function(data) {
+	k.song = JSON.parse(data);
+
+	k.currentSong = JSON.parse(data)
+	s = $("#song").append("<h2>" + k.song.name + "</h2>")
+	for (pi in k.song.part) {
+		part = k.song.part[pi]
+		// p = $("<div class=\"part\"></div>")
+		// p.append("<h3>" + k.song.part[pi].name  + "</h3>")
+		//s.append(p)
+		for (Bi in part.bar) {
+			bar = part.bar[Bi]
+			bar.div = $("<div class=\"bar\"></div>")
+			s.append(bar.div)
+			for (bi in bar.b) {
+				beat = bar.b[bi]
+				beat.div = $("<div class=\"beat\"></div>")
+				chord_div = $("<div class=\"chord\"></div>")
+				lyric_div = $("<span class=\"lyric\"></span>")
+				chord_div.append(beat.n)
+				chord_div.append(beat.q)
+				lyric_div.append(beat.l)
+				beat.div.append(chord_div)
+				beat.div.append(lyric_div)
+				bar.div.append(beat.div)
+			}
+			if (bar > 0 && bar % 2 == 0) {
+				p.append("<div class=\"clear\"></div>")
+			}
+		}
+
+	}
+}
+	k.heartbeat = new WebSocket("ws://localhost:8080/heartbeat", "heartbeat");
+	k.started = false;
+	k.lastbeat = null;
+	
+	k.heartbeat.onmessage = function (beat) {
+		beat = JSON.parse(beat.data);
+		if (!k.lastbeat) {
+			k.lastbeat = beat;
+			$("#loading").hide(1000, function() {
+				$.ajax("http://localhost:8080/show/songs/oh_darling").done(k.updateSong)
+			})
+		}
+		delta = (beat.Ts - k.lastbeat.Ts)/ 1000 / 1000 / 1000;
+		k.lastbeat = beat
+		console.log(delta);
+	}
+</script>
+</head>
+<body>
+<div id="loading">Karaoke is loading…</br>
+(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ) (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)
+</div>
+<div id="song">
+</div>
+</body>
+</html>​
